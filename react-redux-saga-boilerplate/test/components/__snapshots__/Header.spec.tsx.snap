@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Header > should render properly 1`] = `
+<header
+  class="css-157to9t"
+  data-component-name="Header"
+>
+  <div
+    class="css-1ejvhcb"
+    data-component-name="Container"
+  >
+    <div
+      class="css-11mttn6"
+    >
+      <svg
+        src="/media/brand/icon.svg"
+      />
+    </div>
+    <button
+      class="css-17rt720"
+      data-component-name="Logout"
+    >
+      <span
+        class="css-lo0v0o"
+        data-component-name="Text"
+      >
+        logout
+      </span>
+      <span
+        class="css-10mt42n"
+        data-component-name="Icon"
+        name="sign-out"
+      >
+        <svg
+          height="16"
+          src="https://files.gilbarbara.dev/icons/sign-out.svg"
+          title="sign-out"
+          width="16"
+        />
+      </span>
+    </button>
+  </div>
+</header>
+`;

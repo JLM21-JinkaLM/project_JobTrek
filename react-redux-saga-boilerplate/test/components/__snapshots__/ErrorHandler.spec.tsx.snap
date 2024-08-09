@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorHandler > should render the error and clicks 1`] = `
+<div
+  class="css-17f54im"
+  data-component-name="ErrorHandler"
+>
+  <span
+    class="css-1oyk1n8"
+    data-component-name="Icon"
+    name="danger-o"
+  >
+    <svg
+      height="64"
+      src="https://files.gilbarbara.dev/icons/danger-o.svg"
+      title="danger-o"
+      width="64"
+    />
+  </span>
+  <p
+    class="css-18wtmjn"
+    data-component-name="Paragraph"
+  >
+    <span
+      class="css-lo0v0o"
+      data-component-name="Text"
+    >
+      Oh No!
+    </span>
+  </p>
+  <button
+    class="css-1h1mphf"
+    data-component-name="Button"
+    type="button"
+  >
+    Tentar novamente
+  </button>
+</div>
+`;

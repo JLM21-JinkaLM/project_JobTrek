@@ -1,0 +1,20 @@
+{
+  "extends": "@gilbarbara/tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": false,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "dom.iterable", "esnext", "webworker"],
+    "noEmit": true,
+    "paths": {
+      "~/actions": ["src/store/actions"],
+      "~/*": ["src/*"],
+      "assets/*": ["assets/*"],
+      "test/*": ["test/*"],
+      "test-utils": ["test/__setup__/test-utils"]
+    }
+  },
+  "include": ["node_modules/vite-plugin-pwa/client.d.ts", "src/**/*"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

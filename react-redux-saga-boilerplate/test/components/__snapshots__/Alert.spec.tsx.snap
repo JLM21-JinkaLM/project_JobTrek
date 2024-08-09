@@ -1,0 +1,197 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Alert > should render the 'error' type 1`] = `
+<div
+  class="css-waw36"
+  data-component-name="Alert"
+  role="alert"
+>
+  <span
+    class="css-nri15g"
+    data-component-name="Icon"
+    name="close-circle"
+  >
+    <svg
+      height="20"
+      src="https://files.gilbarbara.dev/icons/close-circle.svg"
+      title="close-circle"
+      width="20"
+    />
+  </span>
+  <span
+    class="css-lo0v0o"
+    data-component-name="Text"
+  >
+    <div
+      class="css-n1d5o7"
+      data-component-name="Box"
+    >
+      <p>
+        This is an error message
+      </p>
+    </div>
+  </span>
+</div>
+`;
+
+exports[`Alert > should render the 'info' type 1`] = `
+<div
+  class="css-17nincq"
+  data-component-name="Alert"
+  role="alert"
+>
+  <span
+    class="css-nri15g"
+    data-component-name="Icon"
+    name="info-circle"
+  >
+    <svg
+      height="20"
+      src="https://files.gilbarbara.dev/icons/info-circle.svg"
+      title="info-circle"
+      width="20"
+    />
+  </span>
+  <span
+    class="css-lo0v0o"
+    data-component-name="Text"
+  >
+    <div
+      class="css-n1d5o7"
+      data-component-name="Box"
+    >
+      This is an info message
+    </div>
+  </span>
+</div>
+`;
+
+exports[`Alert > should render the 'neutral' type 1`] = `
+<div
+  class="css-1wzqtgx"
+  data-component-name="Alert"
+  role="alert"
+>
+  <span
+    class="css-nri15g"
+    data-component-name="Icon"
+    name="message-circle"
+  >
+    <svg
+      height="20"
+      src="https://files.gilbarbara.dev/icons/message-circle.svg"
+      title="message-circle"
+      width="20"
+    />
+  </span>
+  <span
+    class="css-lo0v0o"
+    data-component-name="Text"
+  >
+    <div
+      class="css-n1d5o7"
+      data-component-name="Box"
+    >
+      <div>
+        This is a message
+      </div>
+    </div>
+  </span>
+</div>
+`;
+
+exports[`Alert > should render the 'success' type 1`] = `
+<div
+  class="css-d735a"
+  data-component-name="Alert"
+  role="alert"
+>
+  <span
+    class="css-nri15g"
+    data-component-name="Icon"
+    name="check-circle"
+  >
+    <svg
+      height="20"
+      src="https://files.gilbarbara.dev/icons/check-circle.svg"
+      title="check-circle"
+      width="20"
+    />
+  </span>
+  <span
+    class="css-lo0v0o"
+    data-component-name="Text"
+  >
+    <div
+      class="css-n1d5o7"
+      data-component-name="Box"
+    >
+      This is a success message
+    </div>
+  </span>
+</div>
+`;
+
+exports[`Alert > should render the 'warning' type 1`] = `
+<div
+  class="css-17sh1w2"
+  data-component-name="Alert"
+  role="alert"
+>
+  <span
+    class="css-nri15g"
+    data-component-name="Icon"
+    name="danger-circle"
+  >
+    <svg
+      height="20"
+      src="https://files.gilbarbara.dev/icons/danger-circle.svg"
+      title="danger-circle"
+      width="20"
+    />
+  </span>
+  <span
+    class="css-lo0v0o"
+    data-component-name="Text"
+  >
+    <div
+      class="css-n1d5o7"
+      data-component-name="Box"
+    >
+      This is a warning message
+    </div>
+  </span>
+</div>
+`;
+
+exports[`Alert > should render the default alert 1`] = `
+<div
+  class="css-1wzqtgx"
+  data-component-name="Alert"
+  role="alert"
+>
+  <span
+    class="css-nri15g"
+    data-component-name="Icon"
+    name="message-circle"
+  >
+    <svg
+      height="20"
+      src="https://files.gilbarbara.dev/icons/message-circle.svg"
+      title="message-circle"
+      width="20"
+    />
+  </span>
+  <span
+    class="css-lo0v0o"
+    data-component-name="Text"
+  >
+    <div
+      class="css-n1d5o7"
+      data-component-name="Box"
+    >
+      Basic Alert
+    </div>
+  </span>
+</div>
+`;

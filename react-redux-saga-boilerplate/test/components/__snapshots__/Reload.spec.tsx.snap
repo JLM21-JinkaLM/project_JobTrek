@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Reload > should render properly 1`] = `
+<div
+  class="css-15cg8s2"
+  data-component-name="Reload"
+>
+  <h6
+    class="css-hr59i5"
+    data-component-name="H6"
+  >
+    There's a new version of this app!
+  </h6>
+  <button
+    class="css-7rcxmt"
+    data-component-name="Button"
+    type="button"
+  >
+    Reload
+  </button>
+</div>
+`;

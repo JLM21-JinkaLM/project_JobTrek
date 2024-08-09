@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SystemAlerts > should render all zones 1`] = `
+<div>
+  <div
+    class="css-1ewh9kd"
+  >
+    <div
+      class="css-vg32sl"
+    >
+      <div
+        class="transition"
+      />
+    </div>
+    <div
+      class="css-1r5pw8k"
+    >
+      <div
+        class="transition"
+      />
+    </div>
+    <div
+      class="css-50gqfe"
+    >
+      <div
+        class="transition"
+      />
+    </div>
+    <div
+      class="css-ypj8vw"
+    >
+      <div
+        class="transition"
+      />
+    </div>
+  </div>
+</div>
+`;

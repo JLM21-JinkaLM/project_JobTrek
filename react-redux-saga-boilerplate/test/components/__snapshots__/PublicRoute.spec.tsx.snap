@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PublicRoute > should redirect to /private for authenticated access 1`] = `
+<div>
+  <div
+    data-to="/"
+  >
+    NAVIGATE
+  </div>
+</div>
+`;
+
+exports[`PublicRoute > should render the Login component for unauthenticated access 1`] = `
+<div>
+  <div>
+    LOGIN
+  </div>
+</div>
+`;

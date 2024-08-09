@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Transition > should not render if transition don't exist 1`] = `<div />`;
+
+exports[`Transition > should render properly 1`] = `
+<div>
+  <div>
+    <div
+      class="css-cqqmi6 fade-appear fade-appear-active"
+    >
+      <div
+        class="transition"
+      />
+    </div>
+  </div>
+</div>
+`;

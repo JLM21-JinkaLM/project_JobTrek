@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Home > should render properly 1`] = `
+<div
+  class="css-146gbh6"
+  data-component-name="Home"
+>
+  <div
+    class="css-1ym6d5y"
+    data-component-name="Container"
+  >
+    <div
+      class="css-167s73c"
+      data-component-name="Box"
+    >
+      <div
+        class="css-1llpsq5"
+      >
+        <div
+          class="css-11mttn6"
+        >
+          <svg
+            src="/media/brand/icon.svg"
+          />
+        </div>
+      </div>
+      <h1
+        class="css-2kvgnr"
+      >
+        React Redux Saga Boilerplate
+      </h1>
+      <button
+        class="css-3qd3v6"
+        data-component-name="Start"
+        type="button"
+      >
+        <span
+          class="css-1k4akb"
+          data-component-name="Icon"
+          name="star"
+        >
+          <svg
+            height="24"
+            src="https://files.gilbarbara.dev/icons/star.svg"
+            title="star"
+            width="24"
+          />
+        </span>
+        <span
+          class="css-iz9y3l"
+          data-component-name="Text"
+        >
+          Start
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;

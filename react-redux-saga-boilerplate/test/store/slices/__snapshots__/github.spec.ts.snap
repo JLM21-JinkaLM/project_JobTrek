@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`slices/github > actions > getRepos 1`] = `
+{
+  "payload": "react",
+  "type": "github/getRepos",
+}
+`;
+
+exports[`slices/github > reducer > getRepos > should handle FAILURE 1`] = `
+{
+  "topics": {
+    "react": {
+      "cached": false,
+      "data": [],
+      "message": {
+        "message": "Something failed",
+      },
+      "status": "error",
+      "updatedAt": 0,
+    },
+  },
+}
+`;
+
+exports[`slices/github > reducer > getRepos > should handle REQUEST 1`] = `
+{
+  "topics": {
+    "react": {
+      "cached": false,
+      "data": [],
+      "message": "",
+      "status": "running",
+      "updatedAt": 0,
+    },
+  },
+}
+`;
+
+exports[`slices/github > reducer > getRepos > should handle SUCCESS 1`] = `
+{
+  "topics": {
+    "react": {
+      "cached": false,
+      "data": {
+        "data": [
+          {
+            "name": "one",
+          },
+        ],
+      },
+      "message": "",
+      "status": "success",
+      "updatedAt": 1234567890,
+    },
+  },
+}
+`;
+
+exports[`slices/github > reducer > should return the initial state 1`] = `
+{
+  "topics": {},
+}
+`;

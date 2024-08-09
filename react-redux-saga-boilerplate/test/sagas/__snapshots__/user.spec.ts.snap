@@ -1,0 +1,118 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`user > login > should handle SUCCESS 1`] = `
+{
+  "call": [
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "args": [
+          400,
+        ],
+        "context": null,
+        "fn": "@@redux-saga-test-plan/json/function/delayP",
+      },
+      "type": "CALL",
+    },
+  ],
+  "put": [
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "action": {
+          "payload": undefined,
+          "type": "user/loginSuccess",
+        },
+        "channel": undefined,
+      },
+      "type": "PUT",
+    },
+  ],
+}
+`;
+
+exports[`user > logout > should handle SUCCESS 1`] = `
+{
+  "call": [
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "args": [
+          200,
+        ],
+        "context": null,
+        "fn": "@@redux-saga-test-plan/json/function/delayP",
+      },
+      "type": "CALL",
+    },
+  ],
+  "put": [
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "action": {
+          "payload": undefined,
+          "type": "user/logOutSuccess",
+        },
+        "channel": undefined,
+      },
+      "type": "PUT",
+    },
+  ],
+}
+`;
+
+exports[`user > should have the expected watchers 1`] = `
+{
+  "fork": [
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "args": [
+          "user/login",
+          "@@redux-saga-test-plan/json/function/loginSaga",
+        ],
+        "context": null,
+        "fn": "@@redux-saga-test-plan/json/function/takeLatest",
+      },
+      "type": "FORK",
+    },
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "args": [
+          "user/logOut",
+          "@@redux-saga-test-plan/json/function/logoutSaga",
+        ],
+        "context": null,
+        "fn": "@@redux-saga-test-plan/json/function/takeLatest",
+      },
+      "type": "FORK",
+    },
+  ],
+  "take": [
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "pattern": "user/login",
+      },
+      "type": "TAKE",
+    },
+    {
+      "@@redux-saga/IO": true,
+      "combinator": false,
+      "payload": {
+        "pattern": "user/logOut",
+      },
+      "type": "TAKE",
+    },
+  ],
+}
+`;

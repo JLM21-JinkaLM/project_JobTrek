@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Background > should render properly 1`] = `
+<div>
+  <div
+    class="css-146gbh6"
+  />
+</div>
+`;

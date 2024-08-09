@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Logo > should render properly 1`] = `
+<div>
+  <div
+    class="css-11mttn6"
+  >
+    <svg
+      src="/media/brand/icon.svg"
+    />
+  </div>
+</div>
+`;

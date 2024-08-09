@@ -1,0 +1,139 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GitHub > should render a loader, dispatch the action and render no results 1`] = `
+<div
+  data-component-name="GitHubWrapper"
+>
+  <div
+    class="css-1pedvdu"
+    data-component-name="Box"
+  >
+    <div
+      aria-label="GitHub Selector"
+      class="css-179edw6"
+      data-component-name="GitHubSelector"
+      role="group"
+    >
+      <button
+        class="css-hepdsj"
+        data-component-name="Button"
+        data-value="react"
+        type="button"
+      >
+        React
+        <span
+          class="css-1sqvwf5"
+          data-component-name="Icon"
+          name="spinner"
+        >
+          <svg
+            height="20"
+            src="https://cdn.jsdelivr.net/npm/css.gg/icons/svg/spinner.svg"
+            title="spinner"
+            width="20"
+          />
+        </span>
+      </button>
+      <button
+        class="css-1umnmkm"
+        data-component-name="Button"
+        data-value="redux"
+        type="button"
+      >
+        Redux
+      </button>
+    </div>
+  </div>
+  <div
+    class="css-1gnxr2w"
+    data-component-name="LoaderPill"
+  >
+    <div />
+    <div />
+    <div />
+  </div>
+</div>
+`;
+
+exports[`GitHub > should render the repos 1`] = `
+<div
+  class="css-7urdbh"
+  data-component-name="GitHubGrid"
+  data-value="react"
+>
+  <a
+    class="css-ulyjyh"
+    data-component-name="Anchor"
+    href="https://github.com/freeCodeCamp/freeCodeCamp"
+    target="_blank"
+  >
+    <span>
+      <img
+        alt="freeCodeCamp"
+        src="https://avatars0.githubusercontent.com/u/9892522?v=4"
+      />
+      <div
+        class="css-18lzm3a"
+      >
+        <h5
+          class="css-18v6lrm"
+          data-component-name="H5"
+        >
+          freeCodeCamp
+        </h5>
+        <small>
+          freeCodeCamp
+        </small>
+      </div>
+      <p
+        class="css-15bhhaq"
+        data-component-name="Paragraph"
+      >
+        <span
+          class="css-lo0v0o"
+          data-component-name="Text"
+        >
+          freeCodeCamp.org's open source codebase and curriculum. Learn to code at home.
+        </span>
+      </p>
+    </span>
+  </a>
+  <a
+    class="css-ulyjyh"
+    data-component-name="Anchor"
+    href="https://github.com/facebook/react"
+    target="_blank"
+  >
+    <span>
+      <img
+        alt="facebook"
+        src="https://avatars3.githubusercontent.com/u/69631?v=4"
+      />
+      <div
+        class="css-18lzm3a"
+      >
+        <h5
+          class="css-18v6lrm"
+          data-component-name="H5"
+        >
+          react
+        </h5>
+        <small>
+          facebook
+        </small>
+      </div>
+      <p
+        class="css-15bhhaq"
+        data-component-name="Paragraph"
+      >
+        <span
+          class="css-lo0v0o"
+          data-component-name="Text"
+        >
+          A declarative, efficient, and flexible JavaScript library for building user interfaces.
+        </span>
+      </p>
+    </span>
+  </a>
+</div>
+`;

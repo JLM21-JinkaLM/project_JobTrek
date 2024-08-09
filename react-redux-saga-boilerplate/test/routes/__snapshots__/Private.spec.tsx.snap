@@ -1,0 +1,119 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Private > should render properly 1`] = `
+<div
+  class="css-px2j5d"
+  data-component-name="Private"
+>
+  <div
+    class="css-wc6egs"
+    data-component-name="Box"
+  >
+    <div
+      class="css-1tpc2wv"
+      data-component-name="Box"
+    >
+      <h1
+        class="css-hnj43m"
+        data-component-name="Jumbo"
+      >
+        Oh hai!
+      </h1>
+      <p
+        class="css-15bhhaq"
+        data-component-name="Paragraph"
+      >
+        <span
+          class="css-lo0v0o"
+          data-component-name="Text"
+        >
+          You can get this boilerplate
+           
+          <a
+            class="css-15oyb1u"
+            data-component-name="Anchor"
+            href="https://github.com/gilbarbara/react-redux-saga-boilerplate/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              here
+            </span>
+          </a>
+        </span>
+      </p>
+    </div>
+    <div
+      class="css-l3usq0"
+      data-component-name="Box"
+    >
+      <h5
+        class="css-wqaawd"
+        data-component-name="H5"
+      >
+        Here's some GitHub data
+      </h5>
+      <span
+        class="css-bj43zy"
+        data-component-name="Text"
+      >
+        <i>
+          *Just to have some requests in the sagas...
+        </i>
+      </span>
+    </div>
+    <div
+      data-component-name="GitHubWrapper"
+    >
+      <div
+        class="css-1pedvdu"
+        data-component-name="Box"
+      >
+        <div
+          aria-label="GitHub Selector"
+          class="css-179edw6"
+          data-component-name="GitHubSelector"
+          role="group"
+        >
+          <button
+            class="css-hepdsj"
+            data-component-name="Button"
+            data-value="react"
+            type="button"
+          >
+            React
+            <span
+              class="css-1sqvwf5"
+              data-component-name="Icon"
+              name="spinner"
+            >
+              <svg
+                height="20"
+                src="https://cdn.jsdelivr.net/npm/css.gg/icons/svg/spinner.svg"
+                title="spinner"
+                width="20"
+              />
+            </span>
+          </button>
+          <button
+            class="css-1umnmkm"
+            data-component-name="Button"
+            data-value="redux"
+            type="button"
+          >
+            Redux
+          </button>
+        </div>
+      </div>
+      <div
+        class="css-1gnxr2w"
+        data-component-name="LoaderPill"
+      >
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
+  </div>
+</div>
+`;

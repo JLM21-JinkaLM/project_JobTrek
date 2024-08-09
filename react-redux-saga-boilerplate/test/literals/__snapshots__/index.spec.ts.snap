@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`literals > should match the snapshot 1`] = `
+{
+  "ERROR": "error",
+  "IDLE": "idle",
+  "READY": "ready",
+  "RUNNING": "running",
+  "SUCCESS": "success",
+}
+`;
