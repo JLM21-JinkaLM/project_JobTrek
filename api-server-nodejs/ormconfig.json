@@ -5,7 +5,7 @@
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password": "JLmaneesha&359595",
+    "password": "password",
     "database": "job1",
     "autoSchemaSync": true,
     "entities": ["src/models/**/*{.js,.ts}"],
