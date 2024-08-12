@@ -32,7 +32,7 @@ const options: ConnectionOptions = {
   host: "localhost", // MySQL server host
   port: 3306, // MySQL server port (default is 3306)
   username: "root", // MySQL username
-  password: "JLmaneesha&359595", // MySQL password
+  password: "password", // MySQL password
   database: "job1", // Name of the database you want to connect to
 };
 
