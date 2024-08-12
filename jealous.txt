@@ -1,0 +1,17 @@
+--------------UST JOB Portal--------------
+1) UI ----we need to change the UI , designing for our website
+2) forget password.....ask a security question and answer in user table
+3) use redux instead of hooks 
+4) change favi icon , title name
+5) we need to create our own icon and implement it
+6) include images 
+7)connecting the tables
+6)skills and category should connect
+7)category , location, skills are connect to job details table
+8) role and user should connect
+9) user , applied jobs,job details, profile should be connect
+10) profile and user should connect
+11) axios or fetch
+12)work on fonts, colors
+13) responsiveness
+14)
