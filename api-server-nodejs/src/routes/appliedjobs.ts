@@ -10,6 +10,8 @@ const appliedRouter = express.Router();
 appliedRouter.post("/apply", async (req, res) => {
   const { userid, jobid } = req.body;
 
+  console.log(userid, jobid, "ooooooooooooooooooooooooooooooo");
+
   if (!userid || !jobid) {
     return res.status(400).json({ error: "UserId and JobId are required" });
   }

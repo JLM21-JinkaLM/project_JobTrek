@@ -8,12 +8,15 @@ interface Job {
   userId: string;
   title: string;
   description: string;
-  location: string;
+  location_name: string;
   salary: string;
   dateOfPost: string;
-  category: string;
+  category_name: string;
   skills: string;
   lastDate: string;
+  country: string;
+  education: string;
+  skill_names: string;
 }
 
 interface HomeContainerProps {
@@ -42,7 +45,7 @@ const LoginPromptModal: React.FC<{ show: boolean; handleClose: () => void }> = (
             navigate('/login');
           }}
         >
-          log in
+          Log in
         </Button>
       </Modal.Body>
     </Modal>
@@ -51,21 +54,16 @@ const LoginPromptModal: React.FC<{ show: boolean; handleClose: () => void }> = (
 
 const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [showAllJobs, setShowAllJobs] = useState(false);
   const [jobSkills, setJobSkillsSearch] = useState<string>('');
   const [locationSearch, setLocationSearch] = useState<string>('');
   const [categorySearch, setCategorySearch] = useState<string>('');
-  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
-  const [jobCounts, setJobCounts] = useState({
-    'Software Development': 0,
-    Marketing: 0,
-    Finance: 0,
-    Design: 0,
-  });
+  const [categories, setCategories] = useState<
+    { id: string; categoryName: string; count: number }[]
+  >([]);
   const navigate = useNavigate();
-
-  console.log(userDetails, '............', login);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -79,18 +77,25 @@ const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => 
       }
     };
 
-    const fetchJobCounts = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/admin/jobcounts'); // Replace with your API endpoint
+        const response = await fetch('http://localhost:5000/api/category/listCategories'); // Adjust the URL as needed
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await response.json();
-        setJobCounts(data.counts);
+        if (data.success) {
+          setCategories(data.categories);
+        } else {
+          console.error('Failed to fetch categories');
+        }
       } catch (error) {
-        console.error('Error fetching job counts:', error);
+        console.error('Error fetching categories:', error);
       }
     };
 
+    fetchCategories();
     fetchJobs();
-    fetchJobCounts();
   }, []);
 
   const formatDate = (dateString: string) => {
@@ -118,11 +123,12 @@ const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => 
     e.preventDefault();
     const filtered = jobs.filter(
       job =>
-        (jobSkills === '' || job.skills.toLowerCase().includes(jobSkills.toLowerCase())) &&
+        (jobSkills === '' ||
+          job.skill_names.join(',').toLowerCase().includes(jobSkills.toLowerCase())) &&
         (locationSearch === '' ||
-          job.location.toLowerCase().includes(locationSearch.toLowerCase())) &&
+          job.location_name.toLowerCase().includes(locationSearch.toLowerCase())) &&
         (categorySearch === '' ||
-          job.category.toLowerCase().includes(categorySearch.toLowerCase())),
+          job.category_name.toLowerCase().includes(categorySearch.toLowerCase())),
     );
     setFilteredJobs(filtered);
   };
@@ -136,7 +142,7 @@ const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => 
 
   const handleCategoryClick = (category: string) => {
     setCategorySearch(category);
-    const filtered = jobs.filter(job => job.category.toLowerCase() === category.toLowerCase());
+    const filtered = jobs.filter(job => job.category_name.toLowerCase() === category.toLowerCase());
     setFilteredJobs(filtered);
   };
 
@@ -183,10 +189,11 @@ const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => 
                   }
                 >
                   <option value="">Choose Category...</option>
-                  <option value="Software Development">Software Development</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Design">Design</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.categoryName}>
+                      {cat.categoryName}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -202,54 +209,20 @@ const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => 
           <div className="col-md-12">
             <h2 className="text-center mb-4 text-dark">Explore by Categories</h2>
           </div>
-          <div className="col-md-3">
-            <div
-              className="card bg-dark text-white"
-              onClick={() => handleCategoryClick('Software Development')}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="card-body">
-                <h5 className="card-title">Software Development</h5>
-                <p className="card-text">Total Jobs: {jobCounts['Software Development']}</p>
+          {categories.map(category => (
+            <div className="col-md-3 my-3" key={category.id}>
+              <div
+                className="card bg-dark text-white"
+                onClick={() => handleCategoryClick(category.categoryName)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="card-body">
+                  <h5 className="card-title">{category.categoryName}</h5>
+                  <p className="card-text">Total Jobs: {category.count}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-md-3">
-            <div
-              className="card bg-dark text-white"
-              onClick={() => handleCategoryClick('Marketing')}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="card-body">
-                <h5 className="card-title">Marketing</h5>
-                <p className="card-text">Total Jobs: {jobCounts['Marketing']}</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div
-              className="card bg-dark text-white"
-              onClick={() => handleCategoryClick('Finance')}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="card-body">
-                <h5 className="card-title">Finance</h5>
-                <p className="card-text">Total Jobs: {jobCounts['Finance']}</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div
-              className="card bg-dark text-white"
-              onClick={() => handleCategoryClick('Design')}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="card-body">
-                <h5 className="card-title">Design</h5>
-                <p className="card-text">Total Jobs: {jobCounts['Design']}</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
         <div className="row mt-5">
           <div className="col-md-12">
@@ -262,9 +235,12 @@ const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => 
                   <h3 className="card-title text-dark">
                     <strong>{job.title}</strong>
                   </h3>
-                  <p className="card-text text-dark">Location: {job.location}</p>
-                  <p className="card-text text-dark">Salary: {job.salary}</p>
-                  <p className="card-text text-dark">Date Posted: {formatDate(job.dateOfPost)}</p>
+                  <p className="card-text text-dark">Category : {job.category_name}</p>
+                  <p className="card-text text-dark">
+                    Location : {job.location_name} , {job.country}
+                  </p>
+                  <p className="card-text text-dark">Salary : {job.salary} LPA</p>
+                  <p className="card-text text-dark">Date Posted : {formatDate(job.dateOfPost)}</p>
                   <button onClick={() => applyJobHandler(job.id)} className="btn btn-primary">
                     View Details
                   </button>
@@ -275,13 +251,13 @@ const HomeContainer: React.FC<HomeContainerProps> = ({ userDetails, login }) => 
         </div>
         {!showAllJobs && filteredJobs.length > 9 && (
           <div className="text-center mt-4">
-            <button onClick={handleViewMoreJobs} className="btn btn-secondary">
+            <Button onClick={handleViewMoreJobs} className="btn btn-primary">
               View More Jobs
-            </button>
+            </Button>
           </div>
         )}
-        <LoginPromptModal show={showModal} handleClose={handleCloseModal} />
       </div>
+      <LoginPromptModal show={showModal} handleClose={handleCloseModal} />
     </div>
   );
 };

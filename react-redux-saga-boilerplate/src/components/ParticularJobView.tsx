@@ -9,12 +9,16 @@ interface Job {
   userId: number;
   title: string;
   description: string;
-  location: string;
+  location_name: string;
   salary: string;
   dateOfPost: string;
-  category: string;
-  skills: string;
+  category_name: string;
+  skill_names: string;
   lastDate: string;
+  country: string;
+  experience: string;
+  jobtype: string;
+  education: string;
 }
 
 interface ParticularJobViewProps {
@@ -116,22 +120,35 @@ const ParticularJobView: React.FC<ParticularJobViewProps> = ({ userId, user_role
               <strong>Description:</strong> {job.description}
             </p>
             <p className="card-text">
-              <strong>Location:</strong> {job.location}
+              <strong>Location:</strong> {job.location_name} , {job.country}
             </p>
             <p className="card-text">
-              <strong>Salary:</strong> {job.salary}
+              <strong>Salary:</strong> {job.salary} LPA
+            </p>
+
+            <p className="card-text">
+              <strong>Category:</strong> {job.category_name}
+            </p>
+            <p className="card-text">
+              <strong>Skills: </strong>
+              {Array.isArray(job.skill_names)
+                ? job.skill_names.join(', ')
+                : job.skill_names.split(',').join(', ')}
+            </p>
+            <p className="card-text">
+              <strong>Experience:</strong> {job.experience}
+            </p>
+            <p className="card-text">
+              <strong>JobType:</strong> {job.jobtype}
+            </p>
+            <p className="card-text">
+              <strong>Education :</strong> {job.education}
             </p>
             <p className="card-text">
               <strong>Date Posted:</strong> {new Date(job.dateOfPost).toLocaleDateString()}
             </p>
             <p className="card-text">
               <strong>Last Date:</strong> {new Date(job.lastDate).toLocaleDateString()}
-            </p>
-            <p className="card-text">
-              <strong>Category:</strong> {job.category}
-            </p>
-            <p className="card-text">
-              <strong>Skills:</strong> {job.skills}
             </p>
             <button
               className={`btn ${applied ? 'btn-success' : 'btn-primary'}`}

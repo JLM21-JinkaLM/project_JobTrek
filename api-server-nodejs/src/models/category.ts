@@ -10,6 +10,9 @@ export class Category {
   @Column({ unique: true })
   categoryName!: string;
 
+  @Column({ type: "int", default: 0 })
+  count!: number;
+
   @OneToMany(() => Skill, (skill) => skill.category)
   skills!: Skill[];
 

@@ -17,6 +17,12 @@ import { connection } from "../server/database";
 import { logoutUser } from "../controllers/logout.controller";
 import { JobDetails as job_details } from "../models/job_details";
 
+import { Location as location } from "../models/location";
+import { Skill as skill } from "../models/skills";
+import { Category as category } from "../models/category";
+import { JobSkills } from "../models/jobskills";
+// import { Location } from "../models/location";
+
 // eslint-disable-next-line new-cap
 const router = express.Router();
 // Route: <HOST>:PORT/api/users/
@@ -184,13 +190,21 @@ router.post("/edit", checkToken, (req, res) => {
     }
   });
 });
-
 router.get("/joblisting", async (req, res) => {
   try {
     const jobRepository = getRepository(job_details);
+    const jobSkillsRepository = getRepository(JobSkills);
+    const locationRepository = getRepository(location);
+    const skillRepository = getRepository(skill);
+    const categoryRepository = getRepository(category);
 
-    const { skills, location, category } = req.query;
+    const {
+      skills,
+      location: locationQuery,
+      category: categoryQuery,
+    } = req.query;
 
+    // Create the base query for job details
     let query = jobRepository.createQueryBuilder("job");
 
     if (skills) {
@@ -199,35 +213,140 @@ router.get("/joblisting", async (req, res) => {
       });
     }
 
-    if (location) {
-      query = query.andWhere("job.location ILIKE :location", {
-        location: `%${location}%`,
+    if (locationQuery) {
+      query = query.andWhere("job.location_id IN (:...locationIds)", {
+        locationIds: (
+          await locationRepository.find({
+            where: { location_name: locationQuery },
+          })
+        ).map((loc) => loc.id),
       });
     }
 
-    if (category) {
-      query = query.andWhere("job.category ILIKE :category", {
-        category: `%${category}%`,
+    if (categoryQuery) {
+      query = query.andWhere("job.category_id IN (:...categoryIds)", {
+        categoryIds: (
+          await categoryRepository.find({
+            where: { categoryName: categoryQuery },
+          })
+        ).map((cat) => cat.id),
       });
     }
 
     const jobs = await query.getMany();
-    res.status(200).json({ success: true, jobs });
+
+    // Prepare the response array
+    const jobsWithDetails: any[] = [];
+
+    for (const job of jobs) {
+      // Fetch related location entity
+      const location1 = await locationRepository.findOne({
+        where: { id: job.location_id },
+      });
+
+      // Fetch related category entity
+      const category1 = await categoryRepository.findOne({
+        where: { id: job.category_id },
+      });
+
+      const jobSkillEntries = await jobSkillsRepository.find({
+        where: { job_details_id: job.id },
+      });
+
+      const skillIds = jobSkillEntries.flatMap((entry) => {
+        // Use optional chaining and provide a default value if entry.skills_id is undefined
+        const skillsIdString = entry.skills_id ?? "";
+        return skillsIdString
+          .split(",")
+          .map((id) => parseInt(id, 10))
+          .filter((id) => !isNaN(id));
+      });
+
+      // Fetch the skill entities using the array of IDs
+      const skillsEntities = await skillRepository.findByIds(skillIds);
+
+      // Extract skill names from the fetched skill entities
+      const skillNames = skillsEntities.map((skills) => skills.skillName);
+
+      // Build the job detail with names
+      const jobWithDetails = {
+        ...job,
+        location_name: location1 ? location1.location_name : null,
+        country: location1 ? location1.country : null, // Added country field
+        skill_names: skillNames, // Array of skill names
+        category_name: category1 ? category1.categoryName : null,
+      };
+
+      jobsWithDetails.push(jobWithDetails);
+    }
+
+    res.status(200).json({ success: true, jobs: jobsWithDetails });
   } catch (err) {
     console.error("Error fetching jobs:", err);
     res.status(500).json({ success: false, msg: "Error fetching jobs" });
   }
 });
-
-router.get("/joblisting/:id", async (_req, res) => {
+router.get("/joblisting/:id", async (req, res) => {
   try {
     const jobRepository = getRepository(job_details);
-    const job = await jobRepository.findOne(_req.params.id);
-    if (job) {
-      res.status(200).json({ success: true, job });
-    } else {
-      res.status(404).json({ success: false, error: "Job not found" });
+    const jobSkillsRepository = getRepository(JobSkills);
+    const locationRepository = getRepository(location);
+    const skillRepository = getRepository(skill);
+    const categoryRepository = getRepository(category);
+
+    // Fetch the job details by ID
+    const job = await jobRepository.findOne(req.params.id);
+
+    if (!job) {
+      return res.status(404).json({ success: false, error: "Job not found" });
     }
+
+    // Fetch related location entity
+    const location1 = await locationRepository.findOne({
+      where: { id: job.location_id },
+    });
+
+    // Fetch related category entity
+    const category1 = await categoryRepository.findOne({
+      where: { id: job.category_id },
+    });
+
+    // Fetch job skills
+    const jobSkillEntries = await jobSkillsRepository.find({
+      where: { job_details_id: job.id },
+    });
+
+    // Extract skill IDs and fetch skill names
+    // const skillIds = jobSkillEntries.map((entry) => entry.skills_id);
+    // const skillsEntities = await skillRepository.findByIds(skillIds);
+    // const skillNames = skillsEntities.map((skills) => skills.skillName);
+
+    const skillIds = jobSkillEntries.flatMap((entry) => {
+      // Use optional chaining and provide a default value if entry.skills_id is undefined
+      const skillsIdString = entry.skills_id ?? "";
+      return skillsIdString
+        .split(",")
+        .map((id) => parseInt(id, 10))
+        .filter((id) => !isNaN(id));
+    });
+
+    // Fetch the skill entities using the array of IDs
+    const skillsEntities = await skillRepository.findByIds(skillIds);
+
+    // Extract skill names from the fetched skill entities
+    const skillNames = skillsEntities.map((skills) => skills.skillName);
+
+    console.log(skillNames, "fghjklkjhgfdsasdfghj");
+    // Build the job detail with names
+    const jobWithDetails = {
+      ...job,
+      location_name: location1 ? location1.location_name : null,
+      country: location1 ? location1.country : null, // Include country field
+      skill_names: skillNames, // Array of skill names
+      category_name: category1 ? category1.categoryName : null,
+    };
+
+    res.status(200).json({ success: true, job: jobWithDetails });
   } catch (error) {
     console.error("Error fetching job details:", error);
     res
@@ -235,6 +354,57 @@ router.get("/joblisting/:id", async (_req, res) => {
       .json({ success: false, error: "Error fetching job details" });
   }
 });
+
+// router.get("/joblisting", async (req, res) => {
+//   try {
+//     const jobRepository = getRepository(job_details);
+
+//     const { skills, location, category } = req.query;
+
+//     let query = jobRepository.createQueryBuilder("job");
+
+//     if (skills) {
+//       query = query.andWhere("job.skills ILIKE :skills", {
+//         skills: `%${skills}%`,
+//       });
+//     }
+
+//     if (location) {
+//       query = query.andWhere("job.location ILIKE :location", {
+//         location: `%${location}%`,
+//       });
+//     }
+
+//     if (category) {
+//       query = query.andWhere("job.category ILIKE :category", {
+//         category: `%${category}%`,
+//       });
+//     }
+
+//     const jobs = await query.getMany();
+//     res.status(200).json({ success: true, jobs });
+//   } catch (err) {
+//     console.error("Error fetching jobs:", err);
+//     res.status(500).json({ success: false, msg: "Error fetching jobs" });
+//   }
+// });
+
+// router.get("/joblisting/:id", async (_req, res) => {
+//   try {
+//     const jobRepository = getRepository(job_details);
+//     const job = await jobRepository.findOne(_req.params.id);
+//     if (job) {
+//       res.status(200).json({ success: true, job });
+//     } else {
+//       res.status(404).json({ success: false, error: "Job not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error fetching job details:", error);
+//     res
+//       .status(500)
+//       .json({ success: false, error: "Error fetching job details" });
+//   }
+// });
 
 router.get("/users/:userId/appliedjobs", async (req, res) => {
   const { userId } = req.params;
@@ -300,7 +470,7 @@ router.put("/profiles/:userId", async (req, res) => {
   try {
     const profileRepository = getRepository(Profile);
     const { userId } = req.params;
-    const profileData = req.body;
+    const profileData = { ...req.body, skills: req.body.skills.join(",") };
 
     // Check if the profile exists
     const existingProfile = await profileRepository.findOne({

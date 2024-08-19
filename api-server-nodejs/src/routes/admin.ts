@@ -12,6 +12,7 @@ adminRouter.post("/jobcreate", async (req, res) => {
   const jobDetailsRepository = getRepository(job_details);
   const jobSkillsRepository = getRepository(JobSkills);
   const skillRepository = getRepository(skill);
+  const categoryRepository = getRepository(category);
 
   const {
     title,
@@ -43,7 +44,7 @@ adminRouter.post("/jobcreate", async (req, res) => {
     // Convert skillIds array into a comma-separated string
     const skillsIdString = skillIds.join(",");
     console.log(skillsIdString, "11111111111111");
-    
+
     // Create a new job entry
     const newJob = jobDetailsRepository.create({
       title,
@@ -81,12 +82,101 @@ adminRouter.post("/jobcreate", async (req, res) => {
     savedJob.skills_id = job.id;
     await jobDetailsRepository.save(savedJob);
 
+    // Update category count
+    const categoryToUpdate = await categoryRepository.findOne(category_id);
+    if (categoryToUpdate) {
+      categoryToUpdate.count = (categoryToUpdate.count || 0) + 1;
+      await categoryRepository.save(categoryToUpdate);
+    } else {
+      console.error("Category not found:", category_id);
+    }
+
     res.status(201).json(savedJob); // Respond with the created job details
   } catch (error) {
     console.error("Error saving job:", error);
     res.status(500).json({ error: "Error saving job" }); // Handle errors
   }
 });
+
+// adminRouter.post("/jobcreate", async (req, res) => {
+//   const jobDetailsRepository = getRepository(job_details);
+//   const jobSkillsRepository = getRepository(JobSkills);
+//   const skillRepository = getRepository(skill);
+
+//   const {
+//     title,
+//     description,
+//     location_id,
+//     salary,
+//     skills_id, // Array of skill names
+//     category_id,
+//     dateOfPost,
+//     lastDate,
+//     education,
+//     experience,
+//     jobtype,
+//   } = req.body;
+
+//   try {
+//     // Match each skill name with its ID in the Skill table
+//     const skillIds = await Promise.all(
+//       skills_id.map(async (skillName: string) => {
+//         const skills = await skillRepository.findOne({ where: { skillName } });
+//         if (skills) {
+//           return skills.id;
+//         } else {
+//           throw new Error(`Skill not found: ${skillName}`);
+//         }
+//       })
+//     );
+
+//     // Convert skillIds array into a comma-separated string
+//     const skillsIdString = skillIds.join(",");
+//     console.log(skillsIdString, "11111111111111");
+    
+//     // Create a new job entry
+//     const newJob = jobDetailsRepository.create({
+//       title,
+//       description,
+//       location_id,
+//       salary,
+//       category_id,
+//       dateOfPost,
+//       lastDate,
+//       education,
+//       experience,
+//       jobtype,
+//       skills_id: skillsIdString, // Store the string of skill IDs
+//     });
+
+//     // Save the new job entry to the database
+//     const savedJob = await jobDetailsRepository.save(newJob);
+
+//     // Prepare a job skills record
+//     const jobSkillsRecord = {
+//       job_details_id: savedJob.id,
+//       skills_id: skillsIdString,
+//     };
+
+//     // Insert job skills record into the jobcreate_skills_id table
+//     const savedSkillIds = await jobSkillsRepository.save(jobSkillsRecord);
+
+//     // Find the inserted job skills record to update the job's skill_id
+//     const job = await jobSkillsRepository.findOne(savedSkillIds.id);
+//     if (!job) {
+//       return res.status(404).json({ error: "Job not found" });
+//     }
+
+//     // Update the job's skills_id with the job skills record ID
+//     savedJob.skills_id = job.id;
+//     await jobDetailsRepository.save(savedJob);
+
+//     res.status(201).json(savedJob); // Respond with the created job details
+//   } catch (error) {
+//     console.error("Error saving job:", error);
+//     res.status(500).json({ error: "Error saving job" }); // Handle errors
+//   }
+// });
 
 adminRouter.get("/jobdetails", async (_req, res) => {
   try {

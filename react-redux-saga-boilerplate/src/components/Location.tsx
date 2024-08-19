@@ -10,14 +10,14 @@ import axios from 'axios';
 interface LocationData {
   id: number; // Internal ID for managing row order
   locationId: number; // External ID from the backend
-  locationName: string;
+  location_name: string;
   country: string;
 }
 
 const Location: React.FC = () => {
   const [rowData, setRowData] = useState<LocationData[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [newLocation, setNewLocation] = useState({ locationName: '', country: '' });
+  const [newLocation, setNewLocation] = useState({ location_name: '', country: '' });
   const [editMode, setEditMode] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -35,7 +35,7 @@ const Location: React.FC = () => {
             response.data.locations.map((location: any, index: number) => ({
               id: index + 1, // Internal ID for managing row order
               locationId: location.id,
-              locationName: location.locationName,
+              location_name: location.location_name,
               country: location.country,
             })),
           );
@@ -69,7 +69,7 @@ const Location: React.FC = () => {
             location.id === editId
               ? {
                   ...location,
-                  locationName: newLocation.locationName,
+                  location_name: newLocation.location_name,
                   country: newLocation.country,
                 }
               : location,
@@ -88,7 +88,7 @@ const Location: React.FC = () => {
             {
               id: rowData.length + 1, // Increment the internal ID
               locationId: response.data.location.id,
-              locationName: newLocation.locationName,
+              location_name: newLocation.location_name,
               country: newLocation.country,
             },
           ]);
@@ -107,7 +107,7 @@ const Location: React.FC = () => {
     } finally {
       setShowModal(false);
       setShowForm(false);
-      setNewLocation({ locationName: '', country: '' });
+      setNewLocation({ location_name: '', country: '' });
       setEditMode(false);
       setEditId(null);
 
@@ -145,7 +145,7 @@ const Location: React.FC = () => {
     const locationToEdit = rowData.find(location => location.id === id);
     if (locationToEdit) {
       setNewLocation({
-        locationName: locationToEdit.locationName,
+        location_name: locationToEdit.location_name,
         country: locationToEdit.country,
       });
       setEditId(id);
@@ -186,7 +186,7 @@ const Location: React.FC = () => {
     { headerName: 'Location ID', field: 'locationId', sortable: true, filter: true, width: 150 },
     {
       headerName: 'Location Name',
-      field: 'locationName',
+      field: 'location_name',
       sortable: true,
       filter: true,
       width: 225,
@@ -219,7 +219,14 @@ const Location: React.FC = () => {
           {alert.message}
         </Alert>
       )}
-      <div className="ag-theme-alpine" style={{ height: '400px', width: '100%' }}>
+      <div
+        className="ag-theme-alpine"
+        style={{
+          height: '400px',
+          width: '100%',
+          overflow: 'auto', // Enable overflow scrolling
+        }}
+      >
         <AgGridReact
           ref={gridRef}
           rowData={rowData}
@@ -238,13 +245,13 @@ const Location: React.FC = () => {
         <Modal.Body>
           {showForm && (
             <Form>
-              <Form.Group controlId="formLocationName">
+              <Form.Group controlId="formlocation_name">
                 <Form.Label>Location Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter location name"
-                  value={newLocation.locationName}
-                  onChange={e => setNewLocation({ ...newLocation, locationName: e.target.value })}
+                  value={newLocation.location_name}
+                  onChange={e => setNewLocation({ ...newLocation, location_name: e.target.value })}
                 />
               </Form.Group>
               <Form.Group controlId="formCountry">
@@ -264,14 +271,19 @@ const Location: React.FC = () => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
-          {showForm && (
+          {editMode && (
             <Button variant="primary" onClick={handleCreateOrEditLocation}>
-              {editMode ? 'Save Changes' : 'Create Location'}
+              Save Changes
             </Button>
           )}
           {deleteMode && (
             <Button variant="danger" onClick={handleDelete}>
-              Delete
+              Confirm Delete
+            </Button>
+          )}
+          {!editMode && !deleteMode && (
+            <Button variant="primary" onClick={handleCreateOrEditLocation}>
+              Create Location
             </Button>
           )}
         </Modal.Footer>

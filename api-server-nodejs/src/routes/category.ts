@@ -116,4 +116,16 @@ categoryRouter.delete("/categories/:id", async (req, res) => {
   }
 });
 
+categoryRouter.get("/listCategories", async (_req, res) => {
+  try {
+    const categoryRepository = getRepository(Category);
+    const categories = await categoryRepository.find();
+
+    res.status(200).json({ success: true, categories });
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    res.status(500).json({ success: false, msg: "Error fetching categories" });
+  }
+});
+
 export default categoryRouter;
