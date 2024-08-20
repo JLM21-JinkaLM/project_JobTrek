@@ -442,7 +442,8 @@ router.post("/profiles", async (req, res) => {
   try {
     const profileRepository = getRepository(Profile);
     const { userId, ...profileData } = req.body;
-
+    console.log(profileData);
+    
     // Check if the profile already exists
     const existingProfile = await profileRepository.findOne({
       where: { userId },
