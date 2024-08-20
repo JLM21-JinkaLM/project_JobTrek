@@ -47,7 +47,7 @@ adminRouter.post("/jobcreate", async (req, res) => {
 
     // Create a new job entry
     const newJob = jobDetailsRepository.create({
-      title,
+      title,  
       description,
       location_id,
       salary,
@@ -84,6 +84,8 @@ adminRouter.post("/jobcreate", async (req, res) => {
 
     // Update category count
     const categoryToUpdate = await categoryRepository.findOne(category_id);
+    console.log(categoryToUpdate);
+    
     if (categoryToUpdate) {
       categoryToUpdate.count = (categoryToUpdate.count || 0) + 1;
       await categoryRepository.save(categoryToUpdate);
