@@ -439,30 +439,44 @@ router.get("/users/:userId/appliedjobs", async (req, res) => {
 });
 
 router.post("/profiles", async (req, res) => {
-  try {
-    const profileRepository = getRepository(Profile);
-    const { userId, ...profileData } = req.body;
-    console.log(profileData);
-    
-    // Check if the profile already exists
-    const existingProfile = await profileRepository.findOne({
-      where: { userId },
-    });
-    if (existingProfile) {
-      return res
-        .status(400)
-        .json({ message: "Profile already exists. Use the update route." });
-    }
+  const profileRepository = getRepository(Profile);
 
-    // Create new profile
-    const newProfile = profileRepository.create({ userId, ...profileData });
-    await profileRepository.save(newProfile);
-    return res
-      .status(201)
-      .json({ message: "Profile created successfully", profile: newProfile });
-  } catch (err) {
-    console.error("Error creating profile:", err);
-    return res.status(500).json({ message: "Internal server error" });
+  const {
+    userId,
+    name,
+    email,
+    phone,
+    gender,
+    city,
+    country,
+    education,
+    skills, 
+    description,
+  } = req.body;
+
+  try {
+  
+    const skillsString = JSON.stringify(skills); // or skills.join(",") if storing as a comma-separated string
+
+    const newProfile = profileRepository.create({
+      userId,
+      name,
+      email,
+      phone,
+      gender,
+      city,
+      country,
+      education,
+      skills: skillsString, 
+      description,
+    });
+
+    const savedProfile = await profileRepository.save(newProfile);
+
+    res.status(201).json(savedProfile); // Respond with the created profile details
+  } catch (error) {
+    console.error("Error saving profile:", error);
+    res.status(500).json({ error: "Error saving profile" }); // Handle errors
   }
 });
 
